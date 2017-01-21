@@ -39,14 +39,9 @@ module.exports = function(options) {
      * ```js
      * snapdragon.use(isInside());
      * snapdragon.compiler
-     *   .set('foo', function() {
-     *     var pos = this.position();
-     *     var match = this.match(/foo/);
-     *     if (match) {
-     *       if (this.isInside(node, 'some-other-node-type')) {
-     *         // do stuff
-     *       }
-     *       return pos(new Node(match[0]));
+     *   .set('foo', function(node) {
+     *     if (this.isInside(node, 'some-other-node-type')) {
+     *       // do stuff
      *     }
      *   });
      * ```
