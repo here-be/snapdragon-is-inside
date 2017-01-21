@@ -1,7 +1,7 @@
 {
   "name": "snapdragon-is-inside",
   "description": "Snapdragon plugin that adds an `isInside` method to the compiler instance for checking if a node is currently inside a given node type.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/jonschlinkert/snapdragon-is-inside",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/snapdragon-is-inside",
