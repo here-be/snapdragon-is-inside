@@ -9,10 +9,12 @@ var util = require('snapdragon-util');
  * ```js
  * var Snapdragon = require('snapdragon');
  * var isInside = require('snapdragon-is-inside');
+ *
  * // register the plugin
  * var snapdragon = new Snapdragon();
  * snapdragon.use(isInside());
- * // or
+ *
+ * // or register directly on the compiler instance
  * var compiler = new Snapdragon.Compiler();
  * compiler.use(isInside());
  * ```
@@ -22,7 +24,7 @@ var util = require('snapdragon-util');
 module.exports = function(options) {
   return function(snapdragon) {
     if (snapdragon.isSnapdragon) {
-      define(snapdragon.parser, 'isInside', plugin);
+      define(snapdragon.compiler, 'isInside', plugin);
 
     } else if (snapdragon.isCompiler) {
       define(snapdragon, 'isInside', plugin);
@@ -37,15 +39,21 @@ module.exports = function(options) {
      * ```js
      * snapdragon.use(isInside());
      * snapdragon.compiler
-     *   .set(function(node) {
-     *     if (this.isInside(node, /foo/)) {
-     *       // do stuff
+     *   .set('foo', function() {
+     *     var pos = this.position();
+     *     var match = this.match(/foo/);
+     *     if (match) {
+     *       if (this.isInside(node, 'some-other-node-type')) {
+     *         // do stuff
+     *       }
+     *       return pos(new Node(match[0]));
      *     }
-     *   })
+     *   });
      * ```
+     * @name .isInside
      * @param {Object} `node`
-     * @param {RegExp|Function} `regex` Pass the regex to use for capturing. Pass a function if you need access to the compile instance.
-     * @return {Object} Returns the compile instance for chaining
+     * @param {String|Array|Regex} `types` Pass one or more types to check for, or a regex to use for matching types.
+     * @return {Boolean} Returns true if the plugin
      * @api public
      */
 
